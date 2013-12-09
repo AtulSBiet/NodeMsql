@@ -1,3 +1,4 @@
+
 /**
  * Module dependencies.
  */
@@ -9,7 +10,6 @@ var http = require('http');
 var path = require('path');
     mysql      = require('mysql');
 var app = express();
-var databaseName = "t";
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -34,13 +34,13 @@ var connection = mysql.createConnection({
   port     : '20868',
   user     : 'afkjbifrlvccuq9b',
   password : 'amc541mgd62ypyxzlxvgpr1m6zwbfkdc',
-  database : databaseName
+  database : "t"
 });
 
 // Database setup
-connection.query('CREATE DATABASE IF NOT EXISTS ' +  databaseName, function (err) {
+connection.query('CREATE DATABASE IF NOT EXISTS t', function (err) {
   if (err) throw err;
-  connection.query('USE ' + databaseName, function (err) {
+  connection.query('USE t', function (err) {
     if (err) throw err;
     connection.query('CREATE TABLE IF NOT EXISTS user(' +
       'id INT NOT NULL AUTO_INCREMENT,' +  
@@ -52,11 +52,11 @@ connection.query('CREATE DATABASE IF NOT EXISTS ' +  databaseName, function (err
 });
 
 // connection.connect();
-app.get('/users', function (req, res) {
-connection.query('select * from user', function(err, docs) {
-    res.render('users', {users: docs, title: 'App42PaaS Express MySql Application'});
-  });
-});
+// app.get('/users', function (req, res) {
+//   connection.query('select * from user', function(err, docs) {
+//     res.render('users', {users: docs, title: 'App42PaaS Express MySql Application'});
+//   });
+// });
 
 // Add a new User
 app.get("/users/new", function (req, res) {
@@ -72,7 +72,7 @@ app.post("/users", function (req, res) {
   var des=req.body.des;
   connection.query('INSERT INTO user (name,email,des) VALUES (?,?,?);' , [name,email,des], function(err, docs) {
   if (err) res.json(err);
-    res.redirect('users');
+    res.redirect('/');
   });
 });
 
@@ -83,7 +83,7 @@ http.createServer(app).listen(app.get('port'), function(){
 
 // App root
 app.get('/', function(req, res){
-  res.redirect('/users', {
-    title: 'App42PaaS Express MySql Application'
+  connection.query('select * from user', function(err, docs) {
+    res.render('users', {users: docs, title: 'App42PaaS Express MySql Application'});
   });
 });
