@@ -9,6 +9,7 @@ var http = require('http');
 var path = require('path');
     mysql      = require('mysql');
 var app = express();
+var databaseName = "t";
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -33,13 +34,13 @@ var connection = mysql.createConnection({
   port     : '20868',
   user     : 'afkjbifrlvccuq9b',
   password : 'amc541mgd62ypyxzlxvgpr1m6zwbfkdc',
-  database : "t"
+  database : databaseName
 });
 
 // Database setup
-connection.query('CREATE DATABASE IF NOT EXISTS demo_db', function (err) {
+connection.query('CREATE DATABASE IF NOT EXISTS ' +  databaseName, function (err) {
   if (err) throw err;
-  connection.query('USE demo_db', function (err) {
+  connection.query('USE ' + databaseName, function (err) {
     if (err) throw err;
     connection.query('CREATE TABLE IF NOT EXISTS user(' +
       'id INT NOT NULL AUTO_INCREMENT,' +  
