@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -34,7 +33,7 @@ var connection = mysql.createConnection({
   port     : '20868',
   user     : 'afkjbifrlvccuq9b',
   password : 'amc541mgd62ypyxzlxvgpr1m6zwbfkdc',
-  database : "demo_db"
+  database : "t"
 });
 
 // Database setup
